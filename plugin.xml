@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-elepay" version="1.0.0"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <name>ElepayCordova</name>
+    <description>elepay SDK for Cordova</description>
+    <license>MIT</license>
+
+    <keywords>elepay,sdk,cordova,android,ios,payment</keywords>
+    <repo></repo>
+    <issue></issue>
+
+    <js-module name="ElepayCordova" src="www/ElepayCordova.js">
+        <clobbers target="cordova.plugins.ElepayCordova" />
+    </js-module>
+
+    <platform name="ios">
+        <podspec>
+            <config>
+                <source url="https://github.com/CocoaPods/Specs.git"/>
+            </config>
+            <pods use-frameworks="true">
+                <pod name="ElePay" />
+                <pod name="ElePay-ChinesePayments-Plugin" />
+                <pod name="Braintree" />
+            </pods>
+        </podspec>
+        <config-file parent="/*" target="config.xml">
+            <feature name="ElepayCordova">
+                <param name="ios-package" value="ElepayCordova" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/ElepayCordova.swift" />
+    </platform>
+
+    <platform name="android">
+        <framework src="src/android/build.gradle" custom="true" type="gradleReference"/>
+
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="ElepayCordova">
+                <param name="android-package" value="io.elepay.sdk.cordova.plugin.ElepayCordova" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/android/ElepayCordova.java" target-dir="src/cordova-plugin-elepay/ElepayCordova" />
+    </platform>
+</plugin>
