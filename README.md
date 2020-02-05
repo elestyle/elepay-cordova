@@ -4,7 +4,7 @@ Cordova plugin for elepay SDK.
 
 ## Install
 ```
-cordova plugin add cordova-plugin-elepay --save
+cordova plugin add cordova-plugin-elepay
 ```
 
 ### Android
