@@ -4,8 +4,12 @@ Cordova plugin for elepay SDK.
 
 ## Install
 ```
-npm add cordova-plugin-elepay --save
+cordova plugin add cordova-plugin-elepay --save
 ```
+
+### Android
+Cordova plugin for elepay SDK requires "minSdkVersion" being at 21 or above.
+You may need to adjust this value from your project's `build.gradle` file.
 
 ## Usage
 
@@ -86,3 +90,18 @@ Url schemes configurations are required. Please refer to [elepay Android SDK doc
 ## Miscellaneous
 
 1. If you see the building error indicating that "SWIFT_VERSION" is missing when building for iOS, you should change the configuration of the iOS project by specifying the SWIFT_VERSION item. The configuration item can be found in the "Build Settings" tab of your iOS project if you open the project from Xcode.
+
+2. Because elepay SDK uses [AndroidX](https://developer.android.com/jetpack/androidx) internally, the callback `Activity`s uses themes defined from `Theme.AppCompat`. If your application has not defined themes inheriting from `Theme.AppCompat`, you need to add definations to the `styles.xml` file of your project in android platform folder and use it as the theme of the callback `Activity`s.
+Take LinePay callback Activity as example:
+```xml
+    <!-- in styles.xml -->
+    <!-- Elepay activity theme. -->
+    <style name="ElepayTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+```
+```xml
+<!-- in AndroidManifest.xml -->
+<activity android:exported="true" android:name="jp.elestyle.androidapp.elepay.activity.linepay.LinePayActivity" android:theme="@style/ElepayTheme">
+...
+</activity>
+```
