@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-elepay",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Cordova plugin for elepay SDK",
   "cordova": {
     "id": "cordova-plugin-elepay",
