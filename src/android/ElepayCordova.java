@@ -86,39 +86,39 @@ public class ElepayCordova extends CordovaPlugin {
                         JSONObject jsonError = new JSONObject();
                         if (error instanceof ElepayError.UnsupportedPaymentMethod) {
                             ElepayError.UnsupportedPaymentMethod e = ((ElepayError.UnsupportedPaymentMethod) error);
-                            res.put("code", "");
-                            res.put("reason", "Unsupported payment method.");
-                            res.put("message", e.getPaymentMethod());
+                            jsonError.put("code", "");
+                            jsonError.put("reason", "Unsupported payment method.");
+                            jsonError.put("message", e.getPaymentMethod());
                         } else if (error instanceof ElepayError.AlreadyMakingPayment) {
                             ElepayError.AlreadyMakingPayment e = ((ElepayError.AlreadyMakingPayment) error);
-                            res.put("code", "");
-                            res.put("reason", "Already making payment");
-                            res.put("message", e.getPaymentId());
+                            jsonError.put("code", "");
+                            jsonError.put("reason", "Already making payment");
+                            jsonError.put("message", e.getPaymentId());
                         } else if (error instanceof ElepayError.InvalidPayload) {
                             ElepayError.InvalidPayload e = ((ElepayError.InvalidPayload) error);
-                            res.put("code", e.getErrorCode());
-                            res.put("reason", "Invalid payload");
-                            res.put("message", e.getMessage());
+                            jsonError.put("code", e.getErrorCode());
+                            jsonError.put("reason", "Invalid payload");
+                            jsonError.put("message", e.getMessage());
                         } else if (error instanceof ElepayError.UninitializedPaymentMethod) {
                             ElepayError.UninitializedPaymentMethod e = ((ElepayError.UninitializedPaymentMethod) error);
-                            res.put("code", e.getErrorCode());
-                            res.put("reason", "Uninitialized payment method");
-                            res.put("message", e.getPaymentMethod() + " " + e.getMessage());
+                            jsonError.put("code", e.getErrorCode());
+                            jsonError.put("reason", "Uninitialized payment method");
+                            jsonError.put("message", e.getPaymentMethod() + " " + e.getMessage());
                         } else if (error instanceof ElepayError.SystemError) {
                             ElepayError.SystemError e = ((ElepayError.SystemError) error);
-                            res.put("code", e.getErrorCode());
-                            res.put("reason", "System error");
-                            res.put("message", e.getMessage());
+                            jsonError.put("code", e.getErrorCode());
+                            jsonError.put("reason", "System error");
+                            jsonError.put("message", e.getMessage());
                         } else if (error instanceof ElepayError.PaymentFailure) {
                             ElepayError.PaymentFailure e = ((ElepayError.PaymentFailure) error);
-                            res.put("code", e.getErrorCode());
-                            res.put("reason", "Payment failure");
-                            res.put("message", e.getMessage());
+                            jsonError.put("code", e.getErrorCode());
+                            jsonError.put("reason", "Payment failure");
+                            jsonError.put("message", e.getMessage());
                         } else if (error instanceof ElepayError.PermissionRequired) {
                             ElepayError.PermissionRequired e = ((ElepayError.PermissionRequired) error);
-                            res.put("code", "");
-                            res.put("reason", "Permission required");
-                            res.put("message", TextUtils.join(", ", e.getPermissions()));
+                            jsonError.put("code", "");
+                            jsonError.put("reason", "Permission required");
+                            jsonError.put("message", TextUtils.join(", ", e.getPermissions()));
                         }
 
                         res.put("error", jsonError);
