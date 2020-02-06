@@ -89,6 +89,10 @@ Url schemes configurations are required. Please refer to [elepay Android SDK doc
 
 ## Miscellaneous
 
+0. Some payment methods may require special configs on your project. Please be sure you have read the document of elepay iOS/Android SDK.
+* [elepay iOS SDK document](https://developer.elepay.io/docs/ios-sdk)
+* [elepay Android SDK document](https://developer.elepay.io/docs/android-sdk)
+
 1. If you see the building error indicating that "SWIFT_VERSION" is missing when building for iOS, you should change the configuration of the iOS project by specifying the SWIFT_VERSION item. The configuration item can be found in the "Build Settings" tab of your iOS project if you open the project from Xcode.
 
 2. Because elepay SDK uses [AndroidX](https://developer.android.com/jetpack/androidx) internally, the callback `Activity`s uses themes defined from `Theme.AppCompat`. If your application has not defined themes inheriting from `Theme.AppCompat`, you need to add definations to the `styles.xml` file of your project in android platform folder and use it as the theme of the callback `Activity`s.
