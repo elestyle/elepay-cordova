@@ -63,7 +63,18 @@ class ElepayCordova : CDVPlugin {
         let delegate = commandDelegate!
         let callbackId = command.callbackId
 
-        _ = ElePay.handlePayment(charge: payload, viewController: viewController) { result in
+        DispatchQueue.main.async { [weak self] in
+            self?.handlePaymentInMainThread(payload: payload, delegate: delegate, callbackId: callbackId)
+        }
+    }
+
+    @discardableResult
+    private func handlePaymentInMainThread(
+        payload: [String: Any],
+        delegate: CDVCommandDelegate,
+        callbackId: String?
+    ) -> Bool {
+        ElePay.handlePayment(charge: payload, viewController: viewController) { result in
             switch result {
             case .succeeded(let paymentId):
                 let res = RnElepayResult(state: "succeeded", paymentId: paymentId).asDictionary
