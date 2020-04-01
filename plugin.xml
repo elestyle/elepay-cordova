@@ -21,7 +21,7 @@
                 <source url="https://github.com/CocoaPods/Specs.git"/>
             </config>
             <pods use-frameworks="true">
-                <pod name="ElePay" />
+                <pod name="ElePay" spec="1.7.7" />
                 <pod name="ElePay-ChinesePayments-Plugin" />
                 <pod name="Braintree" />
             </pods>

@@ -9,6 +9,7 @@ import jp.elestyle.androidapp.elepay.ElepayError;
 import jp.elestyle.androidapp.elepay.ElepayResult;
 import jp.elestyle.androidapp.elepay.ElepayResultListener;
 import jp.elestyle.androidapp.elepay.GooglePayEnvironment;
+import jp.elestyle.androidapp.elepay.utils.locale.LanguageKey;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -39,6 +40,11 @@ public class ElepayCordova extends CordovaPlugin {
             this.handlePayment(chargeObj, callbackContext);
             return true;
         }
+        if (action.equals("changeLanguage")) {
+            JSONObject langConfig = args.getJSONObject(0);
+            this.changeLanguage(langConfig);
+            return true;
+        }
         return false;
     }
 
@@ -46,13 +52,37 @@ public class ElepayCordova extends CordovaPlugin {
         String pKey = configs.optString("publicKey", "");
         String apiUrl = configs.optString("apiUrl", "");
         String googlePayEnvStr = configs.optString("googlePayEnvironment", "");
+        String languageKeyStr = configs.optString("languageKey", "").toLowerCase();
         GooglePayEnvironment googlePayEnv;
         if (googlePayEnvStr.toLowerCase().contains("test"))  {
             googlePayEnv = GooglePayEnvironment.TEST;
         } else {
             googlePayEnv = GooglePayEnvironment.PRODUCTION;
         }
-        Elepay.setup(new ElepayConfiguration(pKey, apiUrl, googlePayEnv));
+        LanguageKey languageKey = retrieveLanguageKey(languageKeyStr);
+        Elepay.setup(new ElepayConfiguration(pKey, apiUrl, googlePayEnv, languageKey));
+    }
+
+    private void changeLanguage(JSONObject langConfig) {
+        String languageKeyStr = langConfig.optString("languageKey", "").toLowerCase();
+        LanguageKey languageKey = retrieveLanguageKey(languageKeyStr);
+        Elepay.changeLanguageKey(languageKey);
+    }
+
+    private LanguageKey retrieveLanguageKey(String languageKeyStr) {
+        LanguageKey languageKey;
+        if (languageKeyStr.equals("english")) {
+            languageKey = LanguageKey.English;
+        } else if (languageKeyStr.equals("simplifiedchinise")) {
+            languageKey = LanguageKey.SimplifiedChinise;
+        } else if (languageKeyStr.equals("traditionalchinese")) {
+            languageKey = LanguageKey.TraditionalChinese;
+        } else if (languageKeyStr.equals("japanese")) {
+            languageKey = LanguageKey.Japanese;
+        } else {
+            languageKey = LanguageKey.System;
+        }
+        return languageKey;
     }
 
     private void handlePayment(JSONObject chargeObject, CallbackContext callbackContext) {

@@ -7,6 +7,9 @@ Cordova plugin for elepay SDK.
 cordova plugin add cordova-plugin-elepay
 ```
 
+### iOS
+The native SDK requires iOS 10 and above. Please make sure both your project and Podfile settings are correct.
+
 ### Android
 Cordova plugin for elepay SDK requires "minSdkVersion" being at 21 or above.
 You may need to adjust this value from your project's `build.gradle` file.
@@ -22,11 +25,27 @@ You may need to adjust this value from your project's `build.gradle` file.
 // "publicKey": String value. Required. Can be retrieved from your elepay account's dashboard page.
 // "hostUrl": String value. Optional. Indicates the server url that you want to customised. Omitted to use elepay's server.
 // "googlePayEnvironment": String value. "test" or "production". Used to setup Google Pay, can be omitted if Google Pay is not used.
+// "languageKey": String value. Availabile values are "English", "SimplifiedChinise", "TraditionalChinese" and "Japanese". Could be omitted. elepay SDK will try to use the system language settings, and fallback to "English" if no supported languages are found.
 cordova.plugins.ElepayCordova.initElepay({
   publicKey: "the public key string",
   apiUrl: "a customised url string, can be omitted",
-  googlePayEnvironment: "either 'test' or 'product' if presented. Can be omitted if Google Pay is not used"
+  googlePayEnvironment: "either 'test' or 'product' if presented. Can be omitted if Google Pay is not used",
+  languageKey: "one of 'English', 'SimplifiedChinise', 'TraditionalChinese', 'Janapese'. Can be omitted."
 })
+
+// Change localization of elepay UI component.
+//
+// Currently elepay SDK supports the following 4 languages:
+//  * English
+//  * Simplified Chinese
+//  * Traditional Chinese
+//  * Japanese
+//
+// Note: this method should be called **AFTER** `initElepay` and before `handlePayment`.
+// Any invoking before `initELepay` won't work. But this method only required being called once.
+cordova.plugins.ElepayCordova.changeLanguage({
+    languageKey: 'Japanese'
+});
 
 // Process payment after charging.
 //
@@ -68,6 +87,7 @@ cordova.plugins.ElepayCordova.handlePayment(
 ## Callback
 
 Some payment methods(like Line Pay, PayPay, etc.) require to process the payment outside your app. You need to setup the app with extras configurations.
+Please refer to the [payment method settings overview page](https://developer.elepay.io/docs/%E6%A6%82%E8%A6%81) for detail.
 
 ### iOS
 
@@ -85,7 +105,7 @@ function handleOpenURL(url) {
 
 ### Android
 
-Url schemes configurations are required. Please refer to [elepay Android SDK document](https://developer.elepay.io/docs/android-sdk) for detail.
+Url schemes configurations are required. Please refer to the [payment method settings overview page](https://developer.elepay.io/docs/%E6%A6%82%E8%A6%81) for detail.
 
 ## Miscellaneous
 

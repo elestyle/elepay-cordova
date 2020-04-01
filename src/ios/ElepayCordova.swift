@@ -35,6 +35,21 @@ class ElepayCordova : CDVPlugin {
         let publicKey = configs["publicKey"] as? String ?? ""
         let apiUrl = configs["apiUrl"] as? String ?? ""
         ElePay.initApp(key: publicKey, apiURLString: apiUrl)
+
+        performChangingLanguage(langConfig: configs)
+    }
+
+    @objc(changeLanguage:)
+    func changeLanguage(command: CDVInvokedUrlCommand) {
+        let langConfig = command.arguments[0] as? Dictionary<String, Any> ?? [:]
+        performChangingLanguage(langConfig: langConfig)
+    }
+
+    private func performChangingLanguage(langConfig: [String: Any]) {
+        let langCodeStr = langConfig["languageKey"] as? String ?? ""
+        if let langCode = retrieveLanguageCode(from: langCodeStr) {
+            ElePayLocalization.shared.switchLanguage(code: langCode)
+        }
     }
 
     @objc(handleOpenUrl:)
@@ -66,6 +81,18 @@ class ElepayCordova : CDVPlugin {
         DispatchQueue.main.async { [weak self] in
             self?.handlePaymentInMainThread(payload: payload, delegate: delegate, callbackId: callbackId)
         }
+    }
+
+    private func retrieveLanguageCode(from langStr: String) -> ElePayLanguageCode? {
+        let ret: ElePayLanguageCode?
+        switch (langStr.lowercased()) {
+            case "english": ret = .en
+            case "simplifiedchinise": ret = .cn
+            case "traditionalchinese": ret = .tw
+            case "japanese": ret = .ja
+            default: ret = nil
+        }
+        return ret
     }
 
     @discardableResult

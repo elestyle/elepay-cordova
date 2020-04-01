@@ -12,6 +12,14 @@ exports.initElepay = function (configs) {
         [configs]);
 }
 
+exports.changeLanguage = function (langConfig) {
+    exec(function (success) { },
+        function (error) { },
+        'ElepayCordova',
+        'changeLanguage',
+        [langConfig]);
+}
+
 exports.handleOpenUrl = function (url) {
     exec(function (success) { },
         function (error) { },
