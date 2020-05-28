@@ -7,6 +7,12 @@ Cordova plugin for elepay SDK.
 cordova plugin add cordova-plugin-elepay
 ```
 
+This plugin only wraps basic elepay native SDK(iOS/Android).
+As native elepay SDK(iOS/Android) may require individual dependences as the used payment methods,
+please refer to the offical guide for details.
+* [elepay iOS SDK document](https://developer.elepay.io/docs/ios-sdk)
+* [elepay Android SDK document](https://developer.elepay.io/docs/android-sdk)
+
 ### iOS
 The native SDK requires iOS 10 and above. Please make sure both your project and Podfile settings are correct.
 
@@ -86,7 +92,7 @@ cordova.plugins.ElepayCordova.handlePayment(
 
 ## Callback
 
-Some payment methods(like Line Pay, PayPay, etc.) require to process the payment outside your app. You need to setup the app with extras configurations.
+Some payment methods(like Line Pay, PayPay, etc.) require to process the payment out of your app. You need to setup the app with extras configurations.
 Please refer to the [payment method settings overview page](https://developer.elepay.io/docs/%E6%A6%82%E8%A6%81) for detail.
 
 ### iOS
